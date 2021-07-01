@@ -50,7 +50,7 @@ Now open in notepad
 ## 02:  Copy and paste the following anywhere in your profile and replace the $d42_ values with your own
 
     # Device42 CLI Configuration Settings (Replace these with your own)
-    $d42_cli_path_root = 'C:\Users\User\AppData\Local\d42-cli
+    $d42_cli_path_root = 'C:\Users\User\AppData\Local\d42-cli'
     $d42_host       =   '192.168.1.0'
     $d42_user       =   'admin'
     $d42_password   =   'adm!nd42'
