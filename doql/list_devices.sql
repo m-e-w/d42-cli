@@ -45,6 +45,7 @@ WITH target_data AS (
             WHEN d.virtual_host_device_fk IS NULL
             AND d.rack_fk IS NOT NULL THEN CONCAT(b.name, ' | ', ro.name, ' | ', ra.name)
         END AS location_details,
+        COALESCE(b.name, dvhb.name, 'none') AS building,
         d.os_name AS os_name,
         d.os_version AS os_version,
         CASE
