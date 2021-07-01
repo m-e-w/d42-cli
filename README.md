@@ -121,10 +121,11 @@ List your current config details.
     d42 list config
 
 ## list device 
-List properties about a specific device. Device name needs to match completely with one in Device42.
+Search for a device by partial match and return their properties. May return 1 or more devices. Append the --exact switch at the end to do a exact match.
 ### Example
     d42 list device esxi-9000
-
+### Example
+    d42 list device esxi-9000.somedomain.pvt --exact
 ## list device --filter
 Retrieves 1 or more device records and their properties by matching on a supplied filter. (list device --help for full list of available filters)
 
