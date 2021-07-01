@@ -115,6 +115,11 @@ See the list below for commands
 
 # Commands
 
+## list config
+List your current config details. 
+### Example
+    d42 list config
+
 ## list device 
 List properties about a specific device. Device name needs to match completely with one in Device42.
 ### Example
@@ -135,4 +140,9 @@ Retrieves 1 or more device records and their properties by matching on a supplie
     ip
     object_category
     customer
+    building
 
+## list rc
+List all Remote Collectors.
+### Example
+    d42 list rc
