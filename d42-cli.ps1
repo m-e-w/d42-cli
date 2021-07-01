@@ -62,7 +62,7 @@ function Get-D42() {
                         }
                     }
                     elseif ($flag -eq '--help') {
-                        Write-Host "`nDescription:`nList properties about a specific device. Device name needs to match completely with one in Device42.`n`nExample:`nd42 list device esxi-9000`n`nYou can specify a filter by adding the filter flag after the noun as such:`nd42 list device --filter type=virtual`n`nWrap your filter value in ' ' if there are spaces in it.`nd42 list device --filter hw_model='PowerEdge R610'`n`nOnly one filter can be specified at a time and only EQUALS ( = ) comparisons are currently supported.`n`nThese are the currently available filters:"
+                        Write-Host "`nDescription:`nSearch for a device by partial match and return their properties. May return 1 or more devices. Append the --exact switch at the end to do a exact match. --exact does not work in combination with --filter.`n`nExample:`nd42 list device esxi-9000`n`nExample:`nd42 list device esxi-9000.somedomain.pvt --exact`n`nYou can specify a filter by adding the filter flag after the noun as such:`nd42 list device --filter type=virtual`n`nWrap your filter value in ' ' if there are spaces in it.`nd42 list device --filter hw_model='PowerEdge R610'`n`nOnly one filter can be specified at a time and only EQUALS ( = ) comparisons are currently supported.`n`nThese are the currently available filters:"
                         $device_filters
                         Write-Host
                     }
