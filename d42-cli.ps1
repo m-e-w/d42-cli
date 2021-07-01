@@ -68,12 +68,20 @@ function Get-D42() {
                     }
                     # If we're here it means d42 was called without a approved flag
                     else {
+                        # Because no flag was specified directly, $flag will hold the filter value instead of $filter due to the arguments positions
                         if ($flag) {
-                            # Because no flag was specified directly, $flag will hold the filter value instead of $filter due to the arguments positions
-                            $left = 'name'
-                            $right = $flag.ToLower()
-                            $where_clause = "LOWER($($left)) = '$($right)'"
-                            $safety_check = $true
+                            if ($filter -eq '--exact') {
+                                $left = 'name'
+                                $right = $flag.ToLower()
+                                $where_clause = "LOWER($($left)) = '$($right)'"
+                                $safety_check = $true
+                            }
+                            else {
+                                $left = 'name'
+                                $right = $flag.ToLower()
+                                $where_clause = "LOWER($($left)) LIKE '%$($right)%'"
+                                $safety_check = $true
+                            }
                         }
                         else {
                             Write-Host 'No flag specified.'
