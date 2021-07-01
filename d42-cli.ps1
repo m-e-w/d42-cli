@@ -3,6 +3,8 @@ $config = @{
     User = $d42_user
     Pass = $d42_password
 }
+$approved_verbs = @('list')
+$approved_nouns = @('config', 'device', 'rc')
 # Function to call the Device42 CLI
 function Get-D42() {
     param 
@@ -16,13 +18,14 @@ function Get-D42() {
         # Approved Filters: Device: {os_name, service_level, type, hw_model, virtual_host, ip}
         [string] $filter
     )
+
     $device_filters = @('os_name', 'service_level', 'type', 'hw_model', 'virtual_host', 'ip', 'object_category', 'customer', 'building')
     # Dont make any API calls unless input is clean.
     $safety_check = $false
 
-    if ($verb) {
+    if (Confirm-Verb $verb) {
         if ($verb -eq 'list') {
-            if ($noun) {
+            if (Confirm-Noun $noun) {
                 if ($noun -eq 'device') {
                     # Check to see if a filter was specified
                     if ($flag -eq '--filter' ) {
@@ -42,7 +45,7 @@ function Get-D42() {
                                     'ip' { "'$($right)' = ANY(ips)" }
                                     'object_category' { "LOWER(object_category) = '$($right)'" }
                                     'customer' { "LOWER(customer) = '$($right)'" }
-                                    'building' { "LOWER(building) = '$($right)'"}
+                                    'building' { "LOWER(building) = '$($right)'" }
                                     default { 'default' }
                                 }
                                 if ($where_clause -eq 'default') {
@@ -87,23 +90,11 @@ function Get-D42() {
                     $query = "select * from view_remotecollector_v1"
                     $safety_check = $true
                 }
-                else {
-                    Write-Host "Unapproved noun: $($noun)"
-                }
-            }
-            else {
-                Write-Host 'No noun specified'
             }
         }
         elseif ($verb -eq '--help') {
             Write-Host "`n----------How to Use----------`n`nThere are 2 basic ways of calling a d42 cli command.`n`n1. d42 verb noun object_name`n2. d42 verb noun --filter key=value`n`nYou can only specify 1 filter at a time and only EQUALS ( = ) comparisons are supported.`n`nApproved Verbs`nlist`n`nApproved Nouns`ndevice`n`nTip: You can get more information on a command (as well as a list of all available filters) like so:`nd42 list device --help`n"
         }
-        else {
-            Write-Host "Unapproved verb: $($verb)"
-        }  
-    }
-    else {
-        Write-Host 'No verb specified'
     }
     
     if ($safety_check -eq $true) {
@@ -116,5 +107,39 @@ function Get-D42() {
         else {
             Write-Host "No match found for: $($where_clause)"
         }
+    }
+}
+
+function Confirm-Verb() {
+    [string] $verb
+    if ($verb) {
+        if ($approved_verbs -contains $verb ) {
+            return $true
+        }
+        else {
+            Write-Host "Unapproved verb: $($verb)"
+            return $false
+        } 
+    }
+    else {
+        Write-Host 'No verb specified'
+        return $false
+    }
+}
+
+function Confirm-Noun() {
+    [string] $noun
+    if ($noun) {
+        if ($approved_nouns -contains $noun) {
+            return $true
+        }
+        else {
+            Write-Host "Unapproved noun: $($noun)"
+            return $false
+        }
+    }
+    else {
+        Write-Host 'No noun specified'
+        return $false
     }
 }
