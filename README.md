@@ -89,20 +89,20 @@ If you want to read more about PowerShell exeuction policies, consult: https:/go
     
 You should see the following:  
 
+----------How to Use----------
+
     There are 2 basic ways of calling a d42 cli command.
 
-    1. d42 verb noun object_name
-    2. d42 verb noun --filter key=value
+    1. d42 verb noun value
+    2. d42 verb noun flag value
 
-    You can only specify 1 filter at a time and only EQUALS ( = ) comparisons are supported.
-
-    Approved Verbs
+    Verbs
     list
 
-    Approved Nouns
-    device
+    Nouns
+    config device rc
 
-    Tip: You can get more information on a command (as well as a list of all available filters) like so:
+    Tip: You can get more information on a verb-noun pair (as well as a list of all available flags/filters) like so:
     d42 list device --help
 
 ## 05:  Validate your config has loaded
@@ -121,27 +121,26 @@ List your current config details.
     d42 list config
 
 ## list device 
-Search for a device by partial match and return their properties. May return 1 or more devices. Append the --exact switch at the end to do a exact match.
-### Example
-    d42 list device esxi-9000
-### Example
-    d42 list device esxi-9000.somedomain.pvt --exact
-## list device --filter
-Retrieves 1 or more device records and their properties by matching on a supplied filter. (list device --help for full list of available filters)
+    Description:
+            Lookup device(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more devices.
 
-### Example
-    d42 list device --filter type=virtual
+    Flags:
+            (Note: Only one flag can be used at a time)
 
-### Available Filters
-    os_name
-    service_level
-    type
-    hw_model
-    virtual_host
-    ip
-    object_category
-    customer
-    building
+            --exact
+                    Used to do a exact match instead of a partial match.
+
+            --filter
+                    Used to specify a filter. Only one filter can be used at a time and only EQUALS ( = ) comparisons are currently supported.
+
+                    Filters:
+                            os_name service_level type hw_model virtual_host ip object_category customer building
+
+    Examples:
+            d42 list device esxi-9000
+            d42 list device --exact esxi-9000.lab.pvt
+            d42 list device --filter ip=192.168.1.0
+            d42 list device --filter building='Los Angeles'
 
 ## list rc
 List all Remote Collectors.
