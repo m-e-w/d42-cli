@@ -1,39 +1,16 @@
-$version = '0.01'
+$version = '0.02'
 $config = @{
     Host = $d42_host
     User = $d42_user
     Pass = $d42_password
 }
-$APPROVED_VERBS = @('list')
-$APPROVED_NOUNS = @('building', 'config', 'device', 'rc')
+$d42_cli = Get-Content "$($PSScriptRoot)\lib\d42-cli.json" | ConvertFrom-Json 
+$APPROVED_VERBS = $d42_cli.meta.approved_verbs
+$APPROVED_NOUNS = $d42_cli.meta.approved_nouns
 $APPROVED_FILTERS = @{
-    building = @('address', 'contact_name', 'contact_phone')
-    device   = @('os_name', 'service_level', 'type', 'hw_model', 'virtual_host', 'ip', 'object_category', 'customer', 'building')
-    rc       = @('enabled', 'connected', 'state', 'version', 'ip')
-}
-$APPROVED_FLAGS = @{
-    building = @{
-        '--all'    = 'Return all records.' 
-        '--exact'  = 'Used to do a exact match instead of a partial match.'
-        '--filter' = "options: { $($APPROVED_FILTERS['building']) }"
-    }
-    device   = @{
-        '--all'    = 'Return all records.' 
-        '--exact'  = 'Used to do a exact match instead of a partial match.'
-        '--filter' = "options: { $($APPROVED_FILTERS['device']) }"
-    }
-    rc       = @{
-        '--all'    = 'Return all records.' 
-        '--exact'  = 'Used to do a exact match instead of a partial match.'
-        '--filter' = "options: { $($APPROVED_FILTERS['rc']) }"
-    }
-}
-$HELP_MESSAGES = @{
-    list = @{
-        building = "`nDescription:`nLookup building(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.`n`nFlags:`n*Note: Only one flag can be used at a time*`n`n$(ConvertTo-Json $APPROVED_FLAGS['building'])"
-        device   = "`nDescription:`nLookup device(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.`n`nFlags:`n*Note: Only one flag can be used at a time*`n`n$(ConvertTo-Json $APPROVED_FLAGS['device'])"
-        rc       = "`nDescription:`nLookup remote rollector(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.`n`nFlags:`n*Note: Only one flag can be used at a time*`n`n$(ConvertTo-Json $APPROVED_FLAGS['rc'])"
-    }
+    building = $d42_cli.commands.list_building.flags.'--filter'.filters
+    device   = $d42_cli.commands.list_device.flags.'--filter'.filters
+    rc       = $d42_cli.commands.list_rc.flags.'--filter'.filters
 }
 # Function to call the Device42 CLI
 function Get-D42() {
@@ -53,14 +30,20 @@ function Get-D42() {
     elseif (Confirm-Verb -_verb $verb) {
         if ($verb -eq 'list') {
             if (Confirm-Noun -_noun $noun) {
+                # Config is special because unlike every other noun, we aren't building any queries. So this is a special case.
                 if ($noun -eq 'config') {
-                    Write-Host "`nConfig"
-                    $($config) | ConvertTo-Json
-                    Write-Host
+                    if ($flag -eq '--help') {
+                        $d42_cli.commands."$($verb)_$($noun)" | ConvertTo-Json -Depth 3
+                    }
+                    else {
+                        Write-Host "`nConfig"
+                        $($config) | ConvertTo-Json
+                        Write-Host
+                    }
                 }
                 else {
                     if ($flag -eq '--help') {
-                        $HELP_MESSAGES[$verb][$noun] 
+                        $d42_cli.commands."$($verb)_$($noun)" | ConvertTo-Json -Depth 3
                     }
                     # Check to see if a filter was specified
                     elseif ($flag -eq '--filter' ) {

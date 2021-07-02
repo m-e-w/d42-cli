@@ -1,0 +1,83 @@
+{
+    "meta": {
+        "approved_verbs": [
+            "list"
+        ],
+        "approved_nouns": [
+            "building",
+            "config",
+            "device",
+            "rc"
+        ]
+    },
+    "commands": {
+        "list_building": {
+            "description": "Lookup building(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.",
+            "flags": {
+                "--all": {
+                    "description": "Return all records."
+                },
+                "--exact": {
+                    "description": "Used to do a exact match instead of a partial match."
+                },
+                "--filter": {
+                    "description": "Used to filter results.",
+                    "filters": [
+                        "address",
+                        "contact_name",
+                        "contact_phone"
+                    ]
+                }
+            }
+        },
+        "list_config": {
+            "description": "List your current configuration"
+        },
+        "list_device": {
+            "description": "Lookup device(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.",
+            "flags": {
+                "--all": {
+                    "description": "Return all records."
+                },
+                "--exact": {
+                    "description": "Used to do a exact match instead of a partial match."
+                },
+                "--filter": {
+                    "description": "Used to filter results.",
+                    "filters": [
+                        "os_name",
+                        "service_level",
+                        "type",
+                        "hw_model",
+                        "virtual_host",
+                        "ip",
+                        "object_category",
+                        "customer",
+                        "building"
+                    ]
+                }
+            }
+        },
+        "list_rc": {
+            "description": "Lookup remote collector(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.",
+            "flags": {
+                "--all": {
+                    "description": "Return all records."
+                },
+                "--exact": {
+                    "description": "Used to do a exact match instead of a partial match."
+                },
+                "--filter": {
+                    "description": "Used to filter results.",
+                    "filters": [
+                        "enabled",
+                        "connected",
+                        "state",
+                        "version",
+                        "ip"
+                    ]
+                }
+            }
+        }
+    }
+}
