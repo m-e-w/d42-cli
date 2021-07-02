@@ -130,41 +130,66 @@ You should see the following:
 
 # 3. Commands
 ## 3.1. list config
-    Description:
-    List your current configuration.
+    "description": "List your current configuration"
 ## 3.2. list building
-    Description:
-    Lookup building(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.
-
-    Flags:
-    *Note: Only one flag can be used at a time*
-
-    {
-    "--all": "Return all records.",
-    "--filter": "options: { address contact_name contact_phone }",
-    "--exact": "Used to do a exact match instead of a partial match."
+    "description": "Lookup building(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.",
+    "flags": {
+        "--all": {
+            "description": "Return all records."
+        },
+        "--exact": {
+            "description": "Used to do a exact match instead of a partial match."
+        },
+        "--filter": {
+            "description": "Used to filter results.",
+            "filters": [
+                "address",
+                "contact_name",
+                "contact_phone"
+            ]
+        }
     }
 ## 3.3. list device
-    Description:
-    Lookup device(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.
-
-    Flags:
-    *Note: Only one flag can be used at a time*
-
-    {
-    "--all": "Return all records.",
-    "--filter": "options: { os_name service_level type hw_model virtual_host ip object_category customer building }",
-    "--exact": "Used to do a exact match instead of a partial match."
+    "description": "Lookup device(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.",
+    "flags": {
+        "--all": {
+            "description": "Return all records."
+        },
+        "--exact": {
+            "description": "Used to do a exact match instead of a partial match."
+        },
+        "--filter": {
+            "description": "Used to filter results.",
+            "filters": [
+                "os_name",
+                "service_level",
+                "type",
+                "hw_model",
+                "virtual_host",
+                "ip",
+                "object_category",
+                "customer",
+                "building"
+            ]
+        }
     }
 ## 3.4. list rc
-    Description:
-    Lookup remote rollector(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.
-
-    Flags:
-    *Note: Only one flag can be used at a time*
-
-    {
-    "--all": "Return all records.",
-    "--filter": "options: { enabled connected state version ip }",
-    "--exact": "Used to do a exact match instead of a partial match."
+    "description": "Lookup remote collector(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.",
+    "flags": {
+        "--all": {
+            "description": "Return all records."
+        },
+        "--exact": {
+            "description": "Used to do a exact match instead of a partial match."
+        },
+        "--filter": {
+            "description": "Used to filter results.",
+            "filters": [
+                "enabled",
+                "connected",
+                "state",
+                "version",
+                "ip"
+            ]
+        }
     }
