@@ -5,18 +5,24 @@ $config = @{
     Pass = $d42_password
 }
 $APPROVED_VERBS = @('list')
-$APPROVED_NOUNS = @('config', 'device', 'rc')
+$APPROVED_NOUNS = @('building', 'config', 'device', 'rc')
 $APPROVED_FILTERS = @{
-    device = @('os_name', 'service_level', 'type', 'hw_model', 'virtual_host', 'ip', 'object_category', 'customer', 'building')
-    rc     = @('enabled', 'connected', 'state', 'version', 'ip')
+    building = @('address', 'contact_name', 'contact_phone')
+    device   = @('os_name', 'service_level', 'type', 'hw_model', 'virtual_host', 'ip', 'object_category', 'customer', 'building')
+    rc       = @('enabled', 'connected', 'state', 'version', 'ip')
 }
 $APPROVED_FLAGS = @{
-    device = @{
+    building = @{
+        '--all'    = 'Return all records.' 
+        '--exact'  = 'Used to do a exact match instead of a partial match.'
+        '--filter' = "options: { $($APPROVED_FILTERS['building']) }"
+    }
+    device   = @{
         '--all'    = 'Return all records.' 
         '--exact'  = 'Used to do a exact match instead of a partial match.'
         '--filter' = "options: { $($APPROVED_FILTERS['device']) }"
     }
-    rc     = @{
+    rc       = @{
         '--all'    = 'Return all records.' 
         '--exact'  = 'Used to do a exact match instead of a partial match.'
         '--filter' = "options: { $($APPROVED_FILTERS['rc']) }"
@@ -24,8 +30,9 @@ $APPROVED_FLAGS = @{
 }
 $HELP_MESSAGES = @{
     list = @{
-        device = "`nDescription:`nLookup device(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more devices.`n`nFlags:`n*Note: Only one flag can be used at a time*`n`n$(ConvertTo-Json $APPROVED_FLAGS['device'])"
-        rc     = "`nDescription:`nLookup Remote Collector(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more Remote Collector(s)`n`nFlags:`n*Note: Only one flag can be used at a time*`n`n$(ConvertTo-Json $APPROVED_FLAGS['rc'])"
+        building = "`nDescription:`nLookup building(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.`n`nFlags:`n*Note: Only one flag can be used at a time*`n`n$(ConvertTo-Json $APPROVED_FLAGS['building'])"
+        device   = "`nDescription:`nLookup device(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.`n`nFlags:`n*Note: Only one flag can be used at a time*`n`n$(ConvertTo-Json $APPROVED_FLAGS['device'])"
+        rc       = "`nDescription:`nLookup remote rollector(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.`n`nFlags:`n*Note: Only one flag can be used at a time*`n`n$(ConvertTo-Json $APPROVED_FLAGS['rc'])"
     }
 }
 # Function to call the Device42 CLI
@@ -217,6 +224,20 @@ function ConvertTo-Doql() {
                 'state' { "LOWER(state) = '$($_value)'" }
                 'version' { "version = '$($_value)'" }
                 'ip' { "ip = '$($_value)'" }
+                default { 'default' }
+            }
+            $_query = $_query + " WHERE $($_where_clause)"
+        }
+    }
+    elseif ($_noun -eq 'building') {
+        $_query = "select * from view_building_v1"
+        if ($_filter) {
+            $_where_clause = switch ( $_filter ) {
+                'name-exact' { "LOWER(name) = '$($_value)'" }
+                'name-like' { "LOWER(name) LIKE '%$($_value)%'" }
+                'address' { "LOWER(address) = '$($_value)'" }
+                'contact_name' { "LOWER(contact_name) = '$($_value)'" }
+                'contact_phone' { "LOWER(contact_phone) = '$($_value)'" }
                 default { 'default' }
             }
             $_query = $_query + " WHERE $($_where_clause)"
