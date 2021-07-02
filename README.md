@@ -120,29 +120,39 @@ List your current config details.
 ### Example
     d42 list config
 
-## list device 
+## list building
     Description:
-            Lookup device(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more devices.
+    Lookup building(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.
 
     Flags:
-            (Note: Only one flag can be used at a time)
+    *Note: Only one flag can be used at a time*
 
-            --exact
-                    Used to do a exact match instead of a partial match.
+    {
+    "--all": "Return all records.",
+    "--filter": "options: { address contact_name contact_phone }",
+    "--exact": "Used to do a exact match instead of a partial match."
+    }
+## list device
+    Description:
+    Lookup device(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.
 
-            --filter
-                    Used to specify a filter. Only one filter can be used at a time and only EQUALS ( = ) comparisons are currently supported.
+    Flags:
+    *Note: Only one flag can be used at a time*
 
-                    Filters:
-                            os_name service_level type hw_model virtual_host ip object_category customer building
-
-    Examples:
-            d42 list device esxi-9000
-            d42 list device --exact esxi-9000.lab.pvt
-            d42 list device --filter ip=192.168.1.0
-            d42 list device --filter building='Los Angeles'
-
+    {
+    "--all": "Return all records.",
+    "--filter": "options: { os_name service_level type hw_model virtual_host ip object_category customer building }",
+    "--exact": "Used to do a exact match instead of a partial match."
+    }
 ## list rc
-List all Remote Collectors.
-### Example
-    d42 list rc
+    Description:
+    Lookup remote rollector(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.
+
+    Flags:
+    *Note: Only one flag can be used at a time*
+
+    {
+    "--all": "Return all records.",
+    "--filter": "options: { enabled connected state version ip }",
+    "--exact": "Used to do a exact match instead of a partial match."
+    }
