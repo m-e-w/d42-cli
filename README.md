@@ -89,7 +89,7 @@ If you want to read more about PowerShell exeuction policies, consult: https:/go
     
 You should see the following:  
 
-----------How to Use----------
+    ----------How to Use----------
 
     There are 2 basic ways of calling a d42 cli command.
 
