@@ -1,17 +1,14 @@
-$version = '0.02'
+# Load the config
 $config = @{
     Host = $d42_host
     User = $d42_user
     Pass = $d42_password
 }
+# Load the command lib
 $d42_cli = Get-Content "$($PSScriptRoot)\lib\d42-cli.json" | ConvertFrom-Json 
 $APPROVED_VERBS = $d42_cli.meta.approved_verbs
 $APPROVED_NOUNS = $d42_cli.meta.approved_nouns
-$APPROVED_FILTERS = @{
-    building = $d42_cli.commands.list_building.flags.'--filter'.filters
-    device   = $d42_cli.commands.list_device.flags.'--filter'.filters
-    rc       = $d42_cli.commands.list_rc.flags.'--filter'.filters
-}
+
 # Function to call the Device42 CLI
 function Get-D42() {
     param 
@@ -25,7 +22,7 @@ function Get-D42() {
     $safety_check = $false
 
     if ($verb -eq '--help') {
-        Write-Host "`nVersion: $($version)`n`n----------How to Use----------`n`nThere are 2 basic ways of calling a d42 cli command.`n`n1. d42 verb noun value`n2. d42 verb noun flag value`n`nVerbs`n$($APPROVED_VERBS)`n`nNouns`n$($APPROVED_NOUNS)`n`nTip: You can get more information on a verb-noun pair (as well as a list of all available flags/filters) like so:`nd42 list device --help`n"
+        $d42_cli.meta | ConvertTo-Json
     }
     elseif (Confirm-Verb -_verb $verb) {
         if ($verb -eq 'list') {
@@ -52,7 +49,7 @@ function Get-D42() {
                             $left = $split_filter[0]
                             $right = $split_filter[1]
     
-                            if (Confirm-Filter -_noun $noun -_filter $left) {
+                            if (Confirm-Filter -_noun $noun -_verb $verb -_filter $left) {
                                 if ($right) {
                                     $query = ConvertTo-Doql -_noun $noun -_filter $left -_value $right
                                     $safety_check = $true   
@@ -151,10 +148,11 @@ function Confirm-Filter() {
     param 
     (
         [string] $_noun,
+        [string] $_verb,
         [string] $_filter
     )
     if ($_filter) {
-        if ($APPROVED_FILTERS[$_noun] -contains $_filter) {
+        if ($d42_cli.commands."$($verb)_$($_noun)".flags.'--filter'.filters -contains $_filter) {
             return $true
         }
         else {
