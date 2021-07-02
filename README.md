@@ -1,7 +1,24 @@
 # d42-cli
 (Unofficial) Device42 Command Line Interface (CLI) -- PowerShell
+- 
+- [1. Requirements](#1-requirements)
+- [2. Installation](#2-installation)
+  - [2.1 Clone the repostitory -- Recommended](#21-clone-the-repostitory----recommended)
+  - [2.2. Open your PowerShell profile](#22-open-your-powershell-profile)
+    - [2.2.1. (Visual Studio Code) -- Recommended](#221-visual-studio-code----recommended)
+    - [2.2.2. (notepad) -- Not Recommended](#222-notepad----not-recommended)
+  - [2.3. Copy and paste the following anywhere in your profile and replace the $d42_ values with your own](#23-copy-and-paste-the-following-anywhere-in-your-profile-and-replace-the-d42_-values-with-your-own)
+  - [2.4. Close/Re-Open PowerShell](#24-closere-open-powershell)
+  - [2.5. Now test to confirm the alias is working](#25-now-test-to-confirm-the-alias-is-working)
+  - [2.6. Validate your config has loaded](#26-validate-your-config-has-loaded)
+  - [2.7. Try it out](#27-try-it-out)
+- [3. Commands](#3-commands)
+  - [3.1. list config](#31-list-config)
+  - [3.2. list building](#32-list-building)
+  - [3.3. list device](#33-list-device)
+  - [3.4. list rc](#34-list-rc)
 
-## Requirements
+# 1. Requirements
 - PowerShell: 5.1.19041.1023 or >
 - Device42: 17.02.00.1622225288 or >
 
@@ -10,22 +27,22 @@ It may still work with older versions but I cannot guarantee any backwards compa
 Tested with PowerShell Versions 5.1.19041.1023 & 7.1.3  
 Tested with Device42 Verion: 17.02.00.1622225288
 
-# Installation
+# 2. Installation
 
-## 00:  Clone the repostitory -- Recommended
+## 2.1 Clone the repostitory -- Recommended
     git clone https://github.com/m-e-w/d42-cli.git
     
 If you'd prefer to download the zip, just keep in mind the $d42_cli_path_root (zip will append -main to the folder name)  
 
-## 01:  Open your PowerShell profile 
-###         (Visual Studio Code) -- Recommended
+## 2.2. Open your PowerShell profile 
+### 2.2.1. (Visual Studio Code) -- Recommended
 Download Visual Studio Code here if you don't already have it: https://code.visualstudio.com/
 
 Open PowerShell and type:  
 
     code $PROFILE
 
-###         (notepad) -- Not Recommended
+### 2.2.2. (notepad) -- Not Recommended
 Open PowerShell and type:  
 
     $PROFILE
@@ -47,7 +64,7 @@ Now open in notepad
 
     notepad $PROFILE
 
-## 02:  Copy and paste the following anywhere in your profile and replace the $d42_ values with your own
+## 2.3. Copy and paste the following anywhere in your profile and replace the $d42_ values with your own
 
     # Device42 CLI Configuration Settings (Replace these with your own)
     $d42_cli_path_root = 'C:\Users\User\AppData\Local\d42-cli'
@@ -60,7 +77,7 @@ Now open in notepad
     # Set the alias to call the Get-D42 function.
     Set-Alias d42 Get-D42
 
-## 03:  Close/Re-Open PowerShell
+## 2.4. Close/Re-Open PowerShell
 
 You may see a error stating:     
 
@@ -83,7 +100,7 @@ And hit A to confirm.
 
 If you want to read more about PowerShell exeuction policies, consult: https:/go.microsoft.com/fwlink/?LinkID=135170
 
-## 04:  Now test to confirm the alias is working
+## 2.5. Now test to confirm the alias is working
 
     d42 --help
     
@@ -105,22 +122,17 @@ You should see the following:
     Tip: You can get more information on a verb-noun pair (as well as a list of all available flags/filters) like so:
     d42 list device --help
 
-## 05:  Validate your config has loaded
+## 2.6. Validate your config has loaded
     d42 list config
 
-## 06:  Try it out
+## 2.7. Try it out
     d42 list device your_device
 
-See the list below for commands
-
-# Commands
-
-## list config
-List your current config details. 
-### Example
-    d42 list config
-
-## list building
+# 3. Commands
+## 3.1. list config
+    Description:
+    List your current configuration.
+## 3.2. list building
     Description:
     Lookup building(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.
 
@@ -132,7 +144,7 @@ List your current config details.
     "--filter": "options: { address contact_name contact_phone }",
     "--exact": "Used to do a exact match instead of a partial match."
     }
-## list device
+## 3.3. list device
     Description:
     Lookup device(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.
 
@@ -144,7 +156,7 @@ List your current config details.
     "--filter": "options: { os_name service_level type hw_model virtual_host ip object_category customer building }",
     "--exact": "Used to do a exact match instead of a partial match."
     }
-## list rc
+## 3.4. list rc
     Description:
     Lookup remote rollector(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.
 
