@@ -9,7 +9,8 @@
             "building",
             "config",
             "device",
-            "rc"
+            "rc",
+            "room"
         ]
     },
     "commands": {
@@ -110,6 +111,26 @@
                 "ip": "LOWER(ip) = '$($_value)'"
             },
             "query": "select * from view_remotecollector_v1"
+        },
+        "list_room": {
+            "description": "Lookup room(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.",
+            "flags": {
+                "--all": {
+                    "description": "Return all records."
+                },
+                "--exact": {
+                    "description": "Used to do a exact match instead of a partial match."
+                },
+                "--filter": {
+                    "description": "Used to filter results.",
+                    "filters": []
+                }
+            },
+            "conditions": {
+                "name-exact": "LOWER(name) = '$($_value)'",
+                "name-like": "LOWER(name) LIKE '%$($_value)%'"
+            },
+            "query": "select * from view_room_v1"
         }
     }
 }
