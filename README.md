@@ -17,7 +17,7 @@
   - [3.2. list building](#32-list-building)
   - [3.3. list device](#33-list-device)
   - [3.4. list rc](#34-list-rc)
-
+  - [3.5. list room](#35-list-room)
 # 1. Requirements
 - PowerShell: 5.1.19041.1023 or >
 - Device42: 17.02.00.1622225288 or >
