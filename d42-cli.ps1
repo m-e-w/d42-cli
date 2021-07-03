@@ -152,7 +152,7 @@ function Confirm-Filter() {
         [string] $_filter
     )
     if ($_filter) {
-        if ($d42_cli.commands."$($verb)_$($_noun)".meta.flags.'--filter'.filters -contains $_filter) {
+        if ($d42_cli.commands."$($_verb)_$($_noun)".meta.flags.'--filter'.filters -contains $_filter) {
             return $true
         }
         else {
