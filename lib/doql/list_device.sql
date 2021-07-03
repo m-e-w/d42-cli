@@ -196,5 +196,3 @@ SELECT
     time_stamps AS time_stamps
 FROM
     target_data
-WHERE
-    $($ where_clause)
