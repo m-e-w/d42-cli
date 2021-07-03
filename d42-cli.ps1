@@ -30,7 +30,7 @@ function Get-D42() {
                 # Config is special because unlike every other noun, we aren't building any queries. So this is a special case.
                 if ($noun -eq 'config') {
                     if ($flag -eq '--help') {
-                        $d42_cli.commands."$($verb)_$($noun)" | ConvertTo-Json -Depth 3
+                        $d42_cli.commands."$($verb)_$($noun)".meta | ConvertTo-Json -Depth 3
                     }
                     else {
                         Write-Host "`nConfig"
@@ -40,7 +40,7 @@ function Get-D42() {
                 }
                 else {
                     if ($flag -eq '--help') {
-                        $d42_cli.commands."$($verb)_$($noun)" | ConvertTo-Json -Depth 3
+                        $d42_cli.commands."$($verb)_$($noun)".meta | ConvertTo-Json -Depth 3
                     }
                     # Check to see if a filter was specified
                     elseif ($flag -eq '--filter' ) {
@@ -152,7 +152,7 @@ function Confirm-Filter() {
         [string] $_filter
     )
     if ($_filter) {
-        if ($d42_cli.commands."$($verb)_$($_noun)".flags.'--filter'.filters -contains $_filter) {
+        if ($d42_cli.commands."$($verb)_$($_noun)".meta.flags.'--filter'.filters -contains $_filter) {
             return $true
         }
         else {
@@ -174,9 +174,9 @@ function ConvertTo-Doql() {
         [string] $_value
     )
     $_value = $_value.ToLower()
-    $_query = $d42_cli.commands."$($verb)_$($noun)".query.Replace('$($d42_host)', $d42_host)
+    $_query = $d42_cli.commands."$($verb)_$($noun)".doql.query.Replace('$($d42_host)', $d42_host)
     if ($_filter) {
-        $_where_clause = $d42_cli.commands."$($verb)_$($noun)".conditions."$($_filter)".Replace('$($_value)', $_value)
+        $_where_clause = $d42_cli.commands."$($verb)_$($noun)".doql.conditions."$($_filter)".Replace('$($_value)', $_value)
         $_query = $_query + " WHERE $($_where_clause)"
     }  
     return $_query
