@@ -1,28 +1,14 @@
-<#
-    d42-cli module. 
-#>
-
-# Load the config (Values specified in $PROFILE)
-$CONFIG = @{
-    Host  = $d42_host
-    User  = $d42_user
-    Pass  = $d42_password
+# Load the config
+$config = @{
+    Host = $d42_host
+    User = $d42_user
+    Pass = $d42_password
     Debug = $d42_debug
 }
-
-# Load lib\d42-cli.json (Houses all command data)
-$d42_cli = Get-Content "$($PSScriptRoot)\lib\d42-cli.json" | ConvertFrom-Json
-$VERBS = $d42_cli.meta.approved_verbs
-$NOUNS = $d42_cli.meta.approved_nouns
-
-# Imports lib\doql\*.sql files using the query path specified in the commands
-$COMMANDS = $d42_cli.commands
-($COMMANDS | ConvertTo-Json -Depth 5 | ConvertFrom-Json -AsHashtable).Keys | ForEach-Object {
-    if ($COMMANDS.$_.meta.type -eq 'remote') {
-        $COMMANDS.$_.doql.query = Get-Content "$($PSScriptRoot)\$($COMMANDS.$_.doql.query)"
-    }
-}
-
+# Load the command lib
+$d42_cli = Get-Content "$($PSScriptRoot)\lib\d42-cli.json" | ConvertFrom-Json 
+$APPROVED_VERBS = $d42_cli.meta.approved_verbs
+$APPROVED_NOUNS = $d42_cli.meta.approved_nouns
 # Function to call the Device42 CLI
 function Get-D42() {
     param 
@@ -48,7 +34,7 @@ function Get-D42() {
                     }
                     else {
                         Write-Host "`nConfig"
-                        $($CONFIG) | ConvertTo-Json
+                        $($config) | ConvertTo-Json
                         Write-Host
                     }
                 }
@@ -124,7 +110,7 @@ function Confirm-Verb() {
         [string] $_verb
     )
     if ($_verb) {
-        if ($VERBS -contains $_verb ) {
+        if ($APPROVED_VERBS -contains $_verb ) {
             return $true
         }
         else {
@@ -144,7 +130,7 @@ function Confirm-Noun() {
         [string] $_noun
     )
     if ($_noun) {
-        if ($NOUNS -contains $_noun) {
+        if ($APPROVED_NOUNS -contains $_noun) {
             return $true
         }
         else {
@@ -189,12 +175,12 @@ function ConvertTo-Doql() {
         [string] $_value
     )
     $_value = $_value.ToLower()
-    $_query = $COMMANDS."$($_verb)_$($_noun)".doql.query.Replace('$($d42_host)', $d42_host)
+    $_query = $d42_cli.commands."$($_verb)_$($_noun)".doql.query.Replace('$($d42_host)', $d42_host)
     if ($_filter) {
         $_where_clause = $d42_cli.commands."$($_verb)_$($_noun)".doql.conditions."$($_filter)".Replace('$($_value)', $_value)
         $_query = $_query + " WHERE $($_where_clause)"
     }
-    if ($CONFIG.Debug) {
+    if($config.Debug) {
         Write-Host "`nDebug: Enabled`n`nQuery:`n$($_query)`n`nResponse:"
     }  
     return $_query
