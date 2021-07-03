@@ -68,9 +68,10 @@ Now open in notepad
 
     # Device42 CLI Configuration Settings (Replace these with your own)
     $d42_cli_path_root = 'C:\Users\User\AppData\Local\d42-cli'
-    $d42_host       =   '192.168.1.0'
-    $d42_user       =   'admin'
-    $d42_password   =   'adm!nd42'
+    $d42_host          = '192.168.1.0'
+    $d42_user          = 'admin'
+    $d42_password      = 'adm!nd42'
+    $d42_debug         = $false
 
     # Import the d42-cli script
     Import-Module -Name "$($d42_cli_path_root)\d42-cli.ps1"
