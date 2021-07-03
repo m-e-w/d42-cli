@@ -106,22 +106,22 @@ If you want to read more about PowerShell exeuction policies, consult: https:/go
     d42 --help
     
 You should see the following:  
-
-    ----------How to Use----------
-
-    There are 2 basic ways of calling a d42 cli command.
-
-    1. d42 verb noun value
-    2. d42 verb noun flag value
-
-    Verbs
-    list
-
-    Nouns
-    config device rc
-
-    Tip: You can get more information on a verb-noun pair (as well as a list of all available flags/filters) like so:
-    d42 list device --help
+```
+{
+  "description": "(Unofficial) Device42 Command Line Interface (CLI) -- PowerShell",
+  "version": "0.03",
+  "approved_verbs": [
+    "list"
+  ],
+  "approved_nouns": [
+    "building",
+    "config",
+    "device",
+    "rc",
+    "room"
+  ]
+}
+```
 
 ## 2.6. Validate your config has loaded
     d42 list config
