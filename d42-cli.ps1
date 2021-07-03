@@ -51,7 +51,7 @@ function Get-D42() {
     
                             if (Confirm-Filter -_noun $noun -_verb $verb -_filter $left) {
                                 if ($right) {
-                                    $query = ConvertTo-Doql -_noun $noun -_filter $left -_value $right
+                                    $query = ConvertTo-Doql -_noun $noun -_verb $verb -_filter $left -_value $right
                                     $safety_check = $true   
                                 }
                                 else {
@@ -65,7 +65,7 @@ function Get-D42() {
                     }
                     elseif ($flag -eq '--exact') {
                         if ($value) {
-                            $query = ConvertTo-Doql -_noun $noun -_filter 'name-exact'-_value $value
+                            $query = ConvertTo-Doql -_noun $noun -_verb $verb -_filter 'name-exact'-_value $value
                             $safety_check = $true
                         }
                         else {
@@ -73,13 +73,13 @@ function Get-D42() {
                         }
                     }
                     elseif ($flag -eq '--all') {
-                        $query = ConvertTo-Doql -_noun $noun
+                        $query = ConvertTo-Doql -_noun $noun -_verb $verb
                         $safety_check = $true
                     }
                     # If we're here it means d42 was called without a flag
                     else {
                         if ($flag) {
-                            $query = ConvertTo-Doql -_noun $noun -_filter 'name-like' -_value $flag
+                            $query = ConvertTo-Doql -_noun $noun -_verb $verb -_filter 'name-like' -_value $flag
                             $safety_check = $true
                         }
                         else {
@@ -170,13 +170,14 @@ function ConvertTo-Doql() {
     param 
     (
         [string] $_noun,
+        [string] $_verb,
         [string] $_filter,
         [string] $_value
     )
     $_value = $_value.ToLower()
-    $_query = $d42_cli.commands."$($verb)_$($noun)".doql.query.Replace('$($d42_host)', $d42_host)
+    $_query = $d42_cli.commands."$($_verb)_$($_noun)".doql.query.Replace('$($d42_host)', $d42_host)
     if ($_filter) {
-        $_where_clause = $d42_cli.commands."$($verb)_$($noun)".doql.conditions."$($_filter)".Replace('$($_value)', $_value)
+        $_where_clause = $d42_cli.commands."$($_verb)_$($_noun)".doql.conditions."$($_filter)".Replace('$($_value)', $_value)
         $_query = $_query + " WHERE $($_where_clause)"
     }  
     return $_query
