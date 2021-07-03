@@ -3,6 +3,7 @@ $config = @{
     Host = $d42_host
     User = $d42_user
     Pass = $d42_password
+    Debug = $d42_debug
 }
 # Load the command lib
 $d42_cli = Get-Content "$($PSScriptRoot)\lib\d42-cli.json" | ConvertFrom-Json 
@@ -179,6 +180,9 @@ function ConvertTo-Doql() {
     if ($_filter) {
         $_where_clause = $d42_cli.commands."$($_verb)_$($_noun)".doql.conditions."$($_filter)".Replace('$($_value)', $_value)
         $_query = $_query + " WHERE $($_where_clause)"
+    }
+    if($config.Debug) {
+        Write-Host "`nDebug: Enabled`n`nQuery:`n$($_query)`n`nResponse:"
     }  
     return $_query
 }
