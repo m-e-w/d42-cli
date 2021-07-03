@@ -130,66 +130,99 @@ You should see the following:
 
 # 3. Commands
 ## 3.1. list config
-    "description": "List your current configuration"
+```
+{
+  "description": "List your current configuration"
+}
+```
 ## 3.2. list building
-    "description": "Lookup building(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.",
-    "flags": {
-        "--all": {
-            "description": "Return all records."
-        },
-        "--exact": {
-            "description": "Used to do a exact match instead of a partial match."
-        },
-        "--filter": {
-            "description": "Used to filter results.",
-            "filters": [
-                "address",
-                "contact_name",
-                "contact_phone"
-            ]
-        }
+```
+{
+  "description": "Lookup building(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.",
+  "flags": {
+    "--all": {
+      "description": "Return all records."
+    },
+    "--exact": {
+      "description": "Used to do a exact match instead of a partial match."
+    },
+    "--filter": {
+      "description": "Used to filter results.",
+      "filters": [
+        "address",
+        "contact_name",
+        "contact_phone"
+      ]
     }
+  }
+}
+```
 ## 3.3. list device
-    "description": "Lookup device(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.",
-    "flags": {
-        "--all": {
-            "description": "Return all records."
-        },
-        "--exact": {
-            "description": "Used to do a exact match instead of a partial match."
-        },
-        "--filter": {
-            "description": "Used to filter results.",
-            "filters": [
-                "os_name",
-                "service_level",
-                "type",
-                "hw_model",
-                "virtual_host",
-                "ip",
-                "object_category",
-                "customer",
-                "building"
-            ]
-        }
+```
+{
+  "description": "Lookup device(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.",
+  "flags": {
+    "--all": {
+      "description": "Return all records."
+    },
+    "--exact": {
+      "description": "Used to do a exact match instead of a partial match."
+    },
+    "--filter": {
+      "description": "Used to filter results.",
+      "filters": [
+        "os_name",
+        "service_level",
+        "type",
+        "hw_model",
+        "virtual_host",
+        "ip",
+        "object_category",
+        "customer",
+        "building"
+      ]
     }
+  }
+}
+```
 ## 3.4. list rc
-    "description": "Lookup remote collector(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.",
-    "flags": {
-        "--all": {
-            "description": "Return all records."
-        },
-        "--exact": {
-            "description": "Used to do a exact match instead of a partial match."
-        },
-        "--filter": {
-            "description": "Used to filter results.",
-            "filters": [
-                "enabled",
-                "connected",
-                "state",
-                "version",
-                "ip"
-            ]
-        }
+```
+{
+  "description": "Lookup remote collector(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.",
+  "flags": {
+    "--all": {
+      "description": "Return all records."
+    },
+    "--exact": {
+      "description": "Used to do a exact match instead of a partial match."
+    },
+    "--filter": {
+      "description": "Used to filter results.",
+      "filters": [
+        "enabled",
+        "state",
+        "version",
+        "ip"
+      ]
     }
+  }
+}
+```
+## 3.5. list room
+```
+{
+  "description": "Lookup room(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.",
+  "flags": {
+    "--all": {
+      "description": "Return all records."
+    },
+    "--exact": {
+      "description": "Used to do a exact match instead of a partial match."
+    },
+    "--filter": {
+      "description": "Used to filter results.",
+      "filters": []
+    }
+  }
+}
+```
