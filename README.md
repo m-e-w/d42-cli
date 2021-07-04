@@ -229,4 +229,4 @@ You should see the following:
 ```
 
 # Resources
-[<img src="https://img.youtube.com/vi/j0BDHmA26iI/maxresdefault.jpg" width="50%">](https://www.youtube.com/watch?v=j0BDHmA26iI)
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/Yj0BDHmA26iI/0.jpg)](https://www.youtube.com/watch?v=Yj0BDHmA26iI)
