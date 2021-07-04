@@ -18,6 +18,8 @@
   - [3.3. list device](#33-list-device)
   - [3.4. list rc](#34-list-rc)
   - [3.5. list room](#35-list-room)
+- [4. Resources](#4-resources)
+  - [4.1. How to Add a New Command](#41-how-to-add-a-new-command)
 # 1. Requirements
 - PowerShell: 5.1.19041.1023 or >
 - Device42: 17.02.00.1622225288 or >
@@ -228,6 +230,6 @@ You should see the following:
 }
 ```
 
-# Resources
-## How to Add a New Command
+# 4. Resources
+## 4.1. How to Add a New Command
 [![How to Add a New d42-cli Command](https://img.youtube.com/vi/j0BDHmA26iI/0.jpg)](https://www.youtube.com/watch?v=j0BDHmA26iI)
