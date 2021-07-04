@@ -229,4 +229,4 @@ You should see the following:
 ```
 
 # Resources
-[![Watch the video](https://www.youtube.com/watch?v=j0BDHmA26iI/hqdefault.jpg)](https://www.youtube.com/watch?v=j0BDHmA26iI)
+[<img src="https://img.youtube.com/vi/j0BDHmA26iI/maxresdefault.jpg" width="50%">](https://www.youtube.com/watch?v=j0BDHmA26iI)
