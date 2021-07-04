@@ -229,4 +229,5 @@ You should see the following:
 ```
 
 # Resources
+## How to Add a New Command
 [![How to Add a New d42-cli Command](https://img.youtube.com/vi/j0BDHmA26iI/0.jpg)](https://www.youtube.com/watch?v=j0BDHmA26iI)
