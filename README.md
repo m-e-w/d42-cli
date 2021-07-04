@@ -233,3 +233,8 @@ You should see the following:
 # 4. Resources
 ## 4.1. How to Add a New Command
 [![How to Add a New d42-cli Command](https://img.youtube.com/vi/j0BDHmA26iI/0.jpg)](https://www.youtube.com/watch?v=j0BDHmA26iI)
+## 4.2 Links
+- https://www.device42.com/
+- https://docs.device42.com/device42-doql/
+- https://docs.microsoft.com/en-us/powe...
+
