@@ -237,5 +237,5 @@ You should see the following:
 ## 4.2. Links
 - https://www.device42.com/
 - https://docs.device42.com/device42-doql/
-- https://docs.microsoft.com/en-us/powe...
+- https://docs.microsoft.com/en-us/powershell/
 
