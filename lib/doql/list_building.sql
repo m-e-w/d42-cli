@@ -1,1 +1,4 @@
-select * from view_building_v1
+select
+    *
+from
+    view_building_v1

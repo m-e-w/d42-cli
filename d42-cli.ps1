@@ -19,7 +19,7 @@ $NOUNS = $d42_cli.meta.approved_nouns
 $COMMANDS = $d42_cli.commands
 ($COMMANDS | ConvertTo-Json -Depth 5 | ConvertFrom-Json -AsHashtable).Keys | ForEach-Object {
     if ($COMMANDS.$_.meta.type -eq 'remote') {
-        $COMMANDS.$_.doql.query = Get-Content "$($PSScriptRoot)\$($COMMANDS.$_.doql.query)"
+        $COMMANDS.$_.doql.query = ((Get-Content "$($PSScriptRoot)\$($COMMANDS.$_.doql.query)") -replace '(?:\t|\r|\n)','')
     }
 }
 
