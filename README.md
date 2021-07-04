@@ -102,7 +102,7 @@ Now type:
     
 And hit A to confirm. 
 
-If you want to read more about PowerShell exeuction policies, consult: https:/go.microsoft.com/fwlink/?LinkID=135170
+If you want to read more about PowerShell exeuction policies, consult: https://go.microsoft.com/fwlink/?LinkID=135170
 
 ## 2.5. Now test to confirm the alias is working
 
