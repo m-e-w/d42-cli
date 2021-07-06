@@ -58,10 +58,15 @@ function Get-D42() {
                         $D42_CLI.commands."$($verb)_$($noun)".meta | ConvertTo-Json -Depth 3
                     }
                     elseif ($flag -eq '--views') {
-                        $D42_DD | Where-Object view -CLike "*$($value)*" | Select-Object view -Unique
+                        if ($value) {
+                            $D42_DD | Where-Object view -CLike "*$($value)*" | Select-Object view -Unique | Sort-Object { $_.view.length } 
+                        }
+                        else {
+                            $D42_DD | Select-Object view -Unique | Sort-Object { $_.view }
+                        }
                     }
                     else {
-                        $D42_DD | Where-Object view -CLike "*$($flag)*" | Select-Object view, column, data_type, description
+                        $D42_DD | Where-Object view -CLike "*$($flag)*" | Select-Object view, column, data_type, description | Sort-Object { $_.view.length } 
                     }
                 }
                 else {
