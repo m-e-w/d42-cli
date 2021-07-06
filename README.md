@@ -159,7 +159,12 @@ You should see the following:
 ```
 {
   "description": "Lookup columns in the data dictionary by view (current version: 17.03)",
-  "type": "local"
+  "type": "local",
+  "flags": {
+    "--views": {
+      "description": "Only list views. Not columns."
+    }
+  }
 }
 ```
 ## list device
