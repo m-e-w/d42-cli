@@ -1,9 +1,9 @@
 <#
-    d42-cli module. 
+    d42-cli module.
 #>
 
 # Load the config (Values specified in $PROFILE)
-$CONFIG = @{
+$global:D42_CONFIG = @{
     Host  = $d42_host
     User  = $d42_user
     Pass  = $d42_password
@@ -11,20 +11,18 @@ $CONFIG = @{
 }
 
 # Load lib\d42-cli.json (Houses all command data)
-$d42_cli = Get-Content "$($PSScriptRoot)\lib\json\d42-cli.json" | ConvertFrom-Json
-$VERBS = $d42_cli.meta.approved_verbs
-$NOUNS = $d42_cli.meta.approved_nouns
+$global:D42_CLI = Get-Content "$($PSScriptRoot)\lib\json\d42-cli.json" | ConvertFrom-Json
 
 # Imports lib\doql\*.sql files using the query path specified in the commands
-$COMMANDS = $d42_cli.commands
-($COMMANDS | ConvertTo-Json -Depth 5 | ConvertFrom-Json -AsHashtable).Keys | ForEach-Object {
-    if ($COMMANDS.$_.meta.type -eq 'remote') {
-        $COMMANDS.$_.doql.query = ((Get-Content "$($PSScriptRoot)\$($COMMANDS.$_.doql.query)") -replace '(?:\t|\r|\n)', '')
+$global:D42_COMMANDS = $D42_CLI.commands
+($D42_COMMANDS | ConvertTo-Json -Depth 5 | ConvertFrom-Json -AsHashtable).Keys | ForEach-Object {
+    if ($D42_COMMANDS.$_.meta.type -eq 'remote') {
+        $D42_COMMANDS.$_.doql.query = ((Get-Content "$($PSScriptRoot)\$($D42_COMMANDS.$_.doql.query)") -replace '(?:\t|\r|\n)', '')
     }
 }
 
 # Import a local copy of the Device42 data dictonary (https://docs.device42.com/device42-doql/db-viewer-schema/#section-3)
-$DD = Get-Content "$($PSScriptRoot)\lib\json\dd.json" | ConvertFrom-Json
+$global:D42_DD = Get-Content "$($PSScriptRoot)\lib\json\dd.json" | ConvertFrom-Json
 
 # Function to call the Device42 CLI
 function Get-D42() {
@@ -39,7 +37,7 @@ function Get-D42() {
     $safety_check = $false
 
     if ($verb -eq '--help') {
-        $d42_cli.meta | ConvertTo-Json
+        $D42_CLI.meta | ConvertTo-Json
     }
     elseif (Confirm-Verb -_verb $verb) {
         if ($verb -eq 'list') {
@@ -47,25 +45,25 @@ function Get-D42() {
                 # Config is special because unlike every other noun, we aren't building any queries. So this is a special case.
                 if ($noun -eq 'config') {
                     if ($flag -eq '--help') {
-                        $d42_cli.commands."$($verb)_$($noun)".meta | ConvertTo-Json -Depth 3
+                        $D42_CLI.commands."$($verb)_$($noun)".meta | ConvertTo-Json -Depth 3
                     }
                     else {
                         Write-Host "`nConfig"
-                        $($CONFIG) | ConvertTo-Json
+                        $($D42_CONFIG) | ConvertTo-Json
                         Write-Host
                     }
                 }
                 elseif ($noun -eq 'dd') {
                     if ($flag -eq '--help') {
-                        $d42_cli.commands."$($verb)_$($noun)".meta | ConvertTo-Json -Depth 3
+                        $D42_CLI.commands."$($verb)_$($noun)".meta | ConvertTo-Json -Depth 3
                     }
                     else {
-                        $DD | Where-Object view -CLike "*$($flag)*" | Select-Object view, column, data_type, description
+                        $D42_DD | Where-Object view -CLike "*$($flag)*" | Select-Object view, column, data_type, description
                     }
                 }
                 else {
                     if ($flag -eq '--help') {
-                        $d42_cli.commands."$($verb)_$($noun)".meta | ConvertTo-Json -Depth 3
+                        $D42_CLI.commands."$($verb)_$($noun)".meta | ConvertTo-Json -Depth 3
                     }
                     # Check to see if a filter was specified
                     elseif ($flag -eq '--filter' ) {
@@ -135,7 +133,7 @@ function Confirm-Verb() {
         [string] $_verb
     )
     if ($_verb) {
-        if ($VERBS -contains $_verb ) {
+        if ($D42_CLI.meta.approved_verbs -contains $_verb ) {
             return $true
         }
         else {
@@ -155,7 +153,7 @@ function Confirm-Noun() {
         [string] $_noun
     )
     if ($_noun) {
-        if ($NOUNS -contains $_noun) {
+        if ($D42_CLI.meta.approved_nouns -contains $_noun) {
             return $true
         }
         else {
@@ -177,7 +175,7 @@ function Confirm-Filter() {
         [string] $_filter
     )
     if ($_filter) {
-        if ($d42_cli.commands."$($_verb)_$($_noun)".meta.flags.'--filter'.filters -contains $_filter) {
+        if ($D42_CLI.commands."$($_verb)_$($_noun)".meta.flags.'--filter'.filters -contains $_filter) {
             return $true
         }
         else {
@@ -200,12 +198,12 @@ function ConvertTo-Doql() {
         [string] $_value
     )
     $_value = $_value.ToLower()
-    $_query = $COMMANDS."$($_verb)_$($_noun)".doql.query.Replace('$($d42_host)', $d42_host)
+    $_query = $D42_COMMANDS."$($_verb)_$($_noun)".doql.query.Replace('$($d42_host)', $d42_host)
     if ($_filter) {
-        $_where_clause = $d42_cli.commands."$($_verb)_$($_noun)".doql.conditions."$($_filter)".Replace('$($_value)', $_value)
+        $_where_clause = $D42_CLI.commands."$($_verb)_$($_noun)".doql.conditions."$($_filter)".Replace('$($_value)', $_value)
         $_query = $_query + " WHERE $($_where_clause)"
     }
-    if ($CONFIG.Debug) {
+    if ($D42_CONFIG.Debug) {
         Write-Host "`nDebug: Enabled`n`nQuery:`n$($_query)`n`nResponse:"
     }  
     return $_query
