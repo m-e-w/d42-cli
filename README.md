@@ -1,51 +1,44 @@
 # d42-cli
 (Unofficial) Device42 Command Line Interface (CLI) -- PowerShell
-- 
-- [1. Requirements](#1-requirements)
-- [2. Installation](#2-installation)
-  - [2.1 Clone the repostitory -- Recommended](#21-clone-the-repostitory----recommended)
-  - [2.2. Open your PowerShell profile](#22-open-your-powershell-profile)
-    - [2.2.1. (Visual Studio Code) -- Recommended](#221-visual-studio-code----recommended)
-    - [2.2.2. (notepad) -- Not Recommended](#222-notepad----not-recommended)
-  - [2.3. Copy and paste the following anywhere in your profile and replace the $d42_ values with your own](#23-copy-and-paste-the-following-anywhere-in-your-profile-and-replace-the-d42_-values-with-your-own)
-  - [2.4. Close/Re-Open PowerShell](#24-closere-open-powershell)
-  - [2.5. Now test to confirm the alias is working](#25-now-test-to-confirm-the-alias-is-working)
-  - [2.6. Validate your config has loaded](#26-validate-your-config-has-loaded)
-  - [2.7. Try it out](#27-try-it-out)
-- [3. Commands](#3-commands)
-  - [3.1. list config](#31-list-config)
-  - [3.2. list building](#32-list-building)
-  - [3.3. list device](#33-list-device)
-  - [3.4. list rc](#34-list-rc)
-  - [3.5. list room](#35-list-room)
-- [4. Resources](#4-resources)
-  - [4.1. How to Add a New Command](#41-how-to-add-a-new-command)
-  - [4.2. Links](#42-links)
-# 1. Requirements
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Commands](#commands)
+  - [list config](#list-config)
+  - [list building](#list-building)
+  - [list dd](#list-dd)
+  - [list device](#list-device)
+  - [list rc](#list-rc)
+  - [list room](#list-room)
+- [Resources](#resources)
+  - [Videos](#videos)
+  - [Links](#links)
+
+# Requirements
 - PowerShell: 5.1.19041.1023 or >
 - Device42: 17.02.00.1622225288 or >
 
 It may still work with older versions but I cannot guarantee any backwards compatability.  
 
 Tested with PowerShell Versions 5.1.19041.1023 & 7.1.3  
-Tested with Device42 Verion: 17.02.00.1622225288
+Tested with Device42 Verions: 17.02.00.1622225288 - 17.03.00.1624981486
 
-# 2. Installation
+# Installation
 
-## 2.1 Clone the repostitory -- Recommended
+## 1. Clone the repostitory -- Recommended
     git clone https://github.com/m-e-w/d42-cli.git
     
 If you'd prefer to download the zip, just keep in mind the $d42_cli_path_root (zip will append -main to the folder name)  
 
-## 2.2. Open your PowerShell profile 
-### 2.2.1. (Visual Studio Code) -- Recommended
+## 2. Open your PowerShell profile 
+### 2.1. (Visual Studio Code) -- Recommended
 Download Visual Studio Code here if you don't already have it: https://code.visualstudio.com/
 
 Open PowerShell and type:  
 
     code $PROFILE
 
-### 2.2.2. (notepad) -- Not Recommended
+### 2.2. (notepad) -- Not Recommended
 Open PowerShell and type:  
 
     $PROFILE
@@ -67,7 +60,7 @@ Now open in notepad
 
     notepad $PROFILE
 
-## 2.3. Copy and paste the following anywhere in your profile and replace the $d42_ values with your own
+## 3. Copy and paste the following anywhere in your profile and replace the $d42_ values with your own
 
     # Device42 CLI Configuration Settings (Replace these with your own)
     $d42_cli_path_root = 'C:\Users\User\AppData\Local\d42-cli'
@@ -81,7 +74,7 @@ Now open in notepad
     # Set the alias to call the Get-D42 function.
     Set-Alias d42 Get-D42
 
-## 2.4. Close/Re-Open PowerShell
+## 4. Close/Re-Open PowerShell
 
 You may see a error stating:     
 
@@ -104,7 +97,7 @@ And hit A to confirm.
 
 If you want to read more about PowerShell exeuction policies, consult: https://go.microsoft.com/fwlink/?LinkID=135170
 
-## 2.5. Now test to confirm the alias is working
+## 5. Now test to confirm the alias is working
 
     d42 --help
     
@@ -112,13 +105,14 @@ You should see the following:
 ```
 {
   "description": "(Unofficial) Device42 Command Line Interface (CLI) -- PowerShell",
-  "version": "0.03",
+  "version": "0.05",
   "approved_verbs": [
     "list"
   ],
   "approved_nouns": [
     "building",
     "config",
+    "dd",
     "device",
     "rc",
     "room"
@@ -126,20 +120,20 @@ You should see the following:
 }
 ```
 
-## 2.6. Validate your config has loaded
+## 6. Validate your config has loaded
     d42 list config
 
-## 2.7. Try it out
+## 7. Try it out
     d42 list device your_device
 
-# 3. Commands
-## 3.1. list config
+# Commands
+## list config
 ```
 {
   "description": "List your current configuration"
 }
 ```
-## 3.2. list building
+## list building
 ```
 {
   "description": "Lookup building(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.",
@@ -161,7 +155,14 @@ You should see the following:
   }
 }
 ```
-## 3.3. list device
+## list dd
+```
+{
+  "description": "Lookup columns in the data dictionary by view (current version: 17.03)",
+  "type": "local"
+}
+```
+## list device
 ```
 {
   "description": "Lookup device(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.",
@@ -189,7 +190,7 @@ You should see the following:
   }
 }
 ```
-## 3.4. list rc
+## list rc
 ```
 {
   "description": "Lookup remote collector(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.",
@@ -212,7 +213,7 @@ You should see the following:
   }
 }
 ```
-## 3.5. list room
+## list room
 ```
 {
   "description": "Lookup room(s) by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.",
@@ -231,10 +232,11 @@ You should see the following:
 }
 ```
 
-# 4. Resources
-## 4.1. How to Add a New Command
+# Resources
+## Videos
+### How to Add a New Command
 [![How to Add a New d42-cli Command](https://img.youtube.com/vi/j0BDHmA26iI/0.jpg)](https://www.youtube.com/watch?v=j0BDHmA26iI)
-## 4.2. Links
+## Links
 - https://www.device42.com/
 - https://docs.device42.com/device42-doql/
 - https://docs.microsoft.com/en-us/powershell/
