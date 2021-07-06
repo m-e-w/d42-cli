@@ -11,7 +11,7 @@ $CONFIG = @{
 }
 
 # Load lib\d42-cli.json (Houses all command data)
-$d42_cli = Get-Content "$($PSScriptRoot)\lib\d42-cli.json" | ConvertFrom-Json
+$d42_cli = Get-Content "$($PSScriptRoot)\lib\json\d42-cli.json" | ConvertFrom-Json
 $VERBS = $d42_cli.meta.approved_verbs
 $NOUNS = $d42_cli.meta.approved_nouns
 
@@ -23,7 +23,8 @@ $COMMANDS = $d42_cli.commands
     }
 }
 
-$DD = Get-Content "$($PSScriptRoot)\lib\dd.json" | ConvertFrom-Json
+# Import a local copy of the Device42 data dictonary (https://docs.device42.com/device42-doql/db-viewer-schema/#section-3)
+$DD = Get-Content "$($PSScriptRoot)\lib\json\dd.json" | ConvertFrom-Json
 
 # Function to call the Device42 CLI
 function Get-D42() {

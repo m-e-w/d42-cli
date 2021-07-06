@@ -44,7 +44,7 @@
                     "contact_name": "LOWER(contact_name) = '$($_value)'",
                     "contact_phone": "contact_phone = '$($_value)'"
                 },
-                "query": "lib\\doql\\list_building.sql"
+                "query": "lib\\sql\\list_building.sql"
             }
         },
         "list_config": {
@@ -102,7 +102,7 @@
                     "customer": "LOWER(customer) = '$($_value)'",
                     "building": "LOWER(building) = '$($_value)'"
                 },
-                "query": "lib\\doql\\list_device.sql"
+                "query": "lib\\sql\\list_device.sql"
             }
         },
         "list_rc": {
@@ -136,7 +136,7 @@
                     "version": "version = '$($_value)'",
                     "ip": "LOWER(ip) = '$($_value)'"
                 },
-                "query": "lib\\doql\\list_rc.sql"
+                "query": "lib\\sql\\list_rc.sql"
             }
         },
         "list_room": {
@@ -164,7 +164,7 @@
                     "name-like": "LOWER(name) LIKE '%$($_value)%'",
                     "building": "LOWER(building_name) = '$($_value)'"
                 },
-                "query": "lib\\doql\\list_room.sql"
+                "query": "lib\\sql\\list_room.sql"
             }
         }
     }
