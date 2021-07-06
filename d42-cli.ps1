@@ -60,7 +60,7 @@ function Get-D42() {
                         $d42_cli.commands."$($verb)_$($noun)".meta | ConvertTo-Json -Depth 3
                     }
                     else {
-                        $DD | Where-Object view -CLike "*$($flag)*" | Select-Object view, column
+                        $DD | Where-Object view -CLike "*$($flag)*" | Select-Object view, column, data_type, description
                     }
                 }
                 else {
