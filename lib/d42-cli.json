@@ -8,6 +8,7 @@
         "approved_nouns": [
             "building",
             "config",
+            "dd",
             "device",
             "rc",
             "room"
@@ -49,6 +50,13 @@
         "list_config": {
             "meta": {
                 "description": "List your current configuration",
+                "type": "local"
+            },
+            "doql": {}
+        },
+        "list_dd": {
+            "meta": {
+                "description": "Lookup columns in the data dictionary by view (current version: 17.03)",
                 "type": "local"
             },
             "doql": {}

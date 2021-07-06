@@ -19,9 +19,11 @@ $NOUNS = $d42_cli.meta.approved_nouns
 $COMMANDS = $d42_cli.commands
 ($COMMANDS | ConvertTo-Json -Depth 5 | ConvertFrom-Json -AsHashtable).Keys | ForEach-Object {
     if ($COMMANDS.$_.meta.type -eq 'remote') {
-        $COMMANDS.$_.doql.query = ((Get-Content "$($PSScriptRoot)\$($COMMANDS.$_.doql.query)") -replace '(?:\t|\r|\n)','')
+        $COMMANDS.$_.doql.query = ((Get-Content "$($PSScriptRoot)\$($COMMANDS.$_.doql.query)") -replace '(?:\t|\r|\n)', '')
     }
 }
+
+$DD = Get-Content "$($PSScriptRoot)\lib\dd.json" | ConvertFrom-Json
 
 # Function to call the Device42 CLI
 function Get-D42() {
@@ -50,6 +52,14 @@ function Get-D42() {
                         Write-Host "`nConfig"
                         $($CONFIG) | ConvertTo-Json
                         Write-Host
+                    }
+                }
+                elseif ($noun -eq 'dd') {
+                    if ($flag -eq '--help') {
+                        $d42_cli.commands."$($verb)_$($noun)".meta | ConvertTo-Json -Depth 3
+                    }
+                    else {
+                        $DD | Where-Object view -CLike "*$($flag)*" | Select-Object view, column
                     }
                 }
                 else {
