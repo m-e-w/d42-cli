@@ -57,7 +57,12 @@
         "list_dd": {
             "meta": {
                 "description": "Lookup columns in the data dictionary by view (current version: 17.03)",
-                "type": "local"
+                "type": "local",
+                "flags": {
+                    "--views": {
+                        "description": "Only list views. Not columns."
+                    }
+                }
             },
             "doql": {}
         },

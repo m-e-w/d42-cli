@@ -57,6 +57,9 @@ function Get-D42() {
                     if ($flag -eq '--help') {
                         $D42_CLI.commands."$($verb)_$($noun)".meta | ConvertTo-Json -Depth 3
                     }
+                    elseif ($flag -eq '--views') {
+                        $D42_DD | Where-Object view -CLike "*$($value)*" | Select-Object view -Unique
+                    }
                     else {
                         $D42_DD | Where-Object view -CLike "*$($flag)*" | Select-Object view, column, data_type, description
                     }
