@@ -1,6 +1,7 @@
 # d42-cli
 (Unofficial) Device42 Command Line Interface (CLI) -- PowerShell
 
+- [Changelog] (#changelog)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Commands](#commands)
@@ -14,14 +15,15 @@
   - [Videos](#videos)
   - [Links](#links)
 
+# Changelog
+## 2021-08-17
+m-e-w: Deprecating support for PowerShell 5.1 until https://github.com/m-e-w/d42-cli/issues/1 can be reviewed. Will need to review how to keep backwards compatability with older PowerShell versions in the future but for now will update requirements to specify PowerShell 7.0 at the minimum. 
+
 # Requirements
-- PowerShell: 5.1.19041.1023 or >
-- Device42: 17.02.00.1622225288 or >
+- PowerShell 7.0 or >
+- Device42 17.0 or >
 
 It may still work with older versions but I cannot guarantee any backwards compatability.  
-
-Tested with PowerShell Versions 5.1.19041.1023 & 7.1.3  
-Tested with Device42 Verions: 17.02.00.1622225288 - 17.03.00.1624981486
 
 # Installation
 
