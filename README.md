@@ -17,7 +17,9 @@
 
 # Changelog
 ## 2021-08-17
-m-e-w: Deprecating support for PowerShell 5.1 until https://github.com/m-e-w/d42-cli/issues/1 can be reviewed. Will need to review how to keep backwards compatability with older PowerShell versions in the future but for now will update requirements to specify PowerShell 7.0 at the minimum. 
+m-e-w: Deprecating support for PowerShell 5.1 until https://github.com/m-e-w/d42-cli/issues/1 can be reviewed. Will need to review how to keep backwards compatability with older PowerShell versions in the future but for now will update requirements to specify PowerShell 7.0 at the minimum.
+
+m-e-w: Updated license agreement.
 
 # Requirements
 - PowerShell 7.0 or >
