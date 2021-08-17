@@ -1,7 +1,7 @@
 # d42-cli
 (Unofficial) Device42 Command Line Interface (CLI) -- PowerShell
 
-- [Changelog] (#changelog)
+- [Changelog](#changelog)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Commands](#commands)
