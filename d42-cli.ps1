@@ -119,8 +119,8 @@ function Get-D42() {
                     }
                 }
                 if ($safety_check -eq $true) {
-                    $d42_url = "https://$($d42_host)/services/data/v1.0/query/?query=$($query)&output_type=json"
-                    $json = curl.exe -s -k -u "$($d42_user):$($d42_password)" $d42_url
+                    $d42_url = "https://$($d42_host)/services/data/v1.0/query/"
+                    $json = curl.exe -k -s -X POST -d "output_type=json&query=$query" -u "$($d42_user):$($d42_password)" $d42_url
                     $json = $json | ConvertFrom-Json
                     if ($json.name) {
                         $json | ConvertTo-Json
