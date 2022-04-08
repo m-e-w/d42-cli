@@ -141,6 +141,18 @@ function Get-D42() {
                 }                
             }
         }
+        elseif($verb -eq 'update'){
+            if (Confirm-Noun -_noun $noun) {
+                if($noun -eq 'dd'){
+                    if ($flag -eq '--help') {
+                        $D42_CLI.commands."$($verb)_$($noun)".meta | ConvertTo-Json -Depth 3
+                    }
+                    else {
+                        UpdateDD -_host $d42_host -_username $d42_user -_password $d42_password
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -225,4 +237,22 @@ function ConvertTo-Doql() {
         Write-Host "`nDebug: Enabled`n`nQuery:`n$($_query)`n`nResponse:"
     }  
     return $_query
+}
+
+function UpdateDD() {
+    param 
+    (
+        [string] $_host,
+        [string] $_username,
+        [string] $_password
+    )
+    $dd = $null
+    if($Iswindows){
+        $dd = curl.exe -k -s -u "$($_username):$($_password)" "https://$($_host)/services/data/v1.0/dd/" 
+        $dd | ConvertFrom-Json | Select-Object -Property view -ExpandProperty columns | ConvertTo-Json -Depth 99 | Out-File "$($PSScriptRoot)\lib\json\dd.json"
+    }
+    else {
+        $dd = curl -k -s -u "$($_username):$($_password)" "https://$($_host)/services/data/v1.0/dd/"
+        $dd | ConvertFrom-Json | Select-Object -Property view -ExpandProperty columns | ConvertTo-Json -Depth 99 | Out-File "$($PSScriptRoot)/lib/json/dd.json"
+    }   
 }
