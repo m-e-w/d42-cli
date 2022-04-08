@@ -21,6 +21,11 @@ m-e-w: Deprecating support for PowerShell 5.1 until https://github.com/m-e-w/d42
 
 m-e-w: Updated license agreement.
 
+## Patch 0.07 | 2022-04-07
+m-e-w: Fixed a bug with curl. 
+
+m-e-w: Added support for linux.
+
 # Requirements
 - PowerShell 7.0 or >
 - Device42 17.0 or >

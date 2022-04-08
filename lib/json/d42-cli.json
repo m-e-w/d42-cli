@@ -1,7 +1,7 @@
 {
     "meta": {
         "description": "(Unofficial) Device42 Command Line Interface (CLI) -- PowerShell",
-        "version": "0.06",
+        "version": "0.07",
         "approved_verbs": [
             "list"
         ],
