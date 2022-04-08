@@ -3,7 +3,8 @@
         "description": "(Unofficial) Device42 Command Line Interface (CLI) -- PowerShell",
         "version": "0.07",
         "approved_verbs": [
-            "list"
+            "list",
+            "update"
         ],
         "approved_nouns": [
             "building",
@@ -171,6 +172,14 @@
                 },
                 "query": "lib\\sql\\list_room.sql"
             }
+        },
+        "update_dd": {
+            "meta": {
+                "description": "Update local data dictionary. Close/reopen PowerShell for changes to load.",
+                "type": "local",
+                "flags": {}
+            },
+            "doql": {}
         }
     }
 }
