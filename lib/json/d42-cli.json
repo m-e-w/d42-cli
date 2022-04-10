@@ -13,7 +13,8 @@
             "dd",
             "device",
             "rc",
-            "room"
+            "room",
+            "security"
         ]
     },
     "commands": {
@@ -197,6 +198,31 @@
                     "building": "LOWER(building_name) = '$($_value)'"
                 },
                 "query": "lib\\sql\\list_room.sql"
+            }
+        },
+        "list_security": {
+            "meta": {
+                "description": "Lookup security resources by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.",
+                "type": "remote",
+                "flags": {
+                    "--all": {
+                        "description": "Return all records."
+                    },
+                    "--exact": {
+                        "description": "Used to do a exact match instead of a partial match."
+                    },
+                    "--filter": {
+                        "description": "Used to filter results.",
+                        "filters": []
+                    }
+                }
+            },
+            "doql": {
+                "conditions": {
+                    "name-exact": "LOWER(device_name) = '$($_value)'",
+                    "name-like": "LOWER(device_name) LIKE '%$($_value)%'"
+                },
+                "query": "lib\\sql\\list_security.sql"
             }
         },
         "update_dd": {
