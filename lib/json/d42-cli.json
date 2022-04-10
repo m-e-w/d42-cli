@@ -8,6 +8,7 @@
         ],
         "approved_nouns": [
             "building",
+            "compute",
             "config",
             "dd",
             "device",
@@ -46,6 +47,31 @@
                     "contact_phone": "contact_phone = '$($_value)'"
                 },
                 "query": "lib\\sql\\list_building.sql"
+            }
+        },
+        "list_compute": {
+            "meta": {
+                "description": "Lookup compute resources by partial match and return their properties. Default is do perform a partial lookup so it may return 1 or more records.",
+                "type": "remote",
+                "flags": {
+                    "--all": {
+                        "description": "Return all records."
+                    },
+                    "--exact": {
+                        "description": "Used to do a exact match instead of a partial match."
+                    },
+                    "--filter": {
+                        "description": "Used to filter results.",
+                        "filters": []
+                    }
+                }
+            },
+            "doql": {
+                "conditions": {
+                    "name-exact": "LOWER(device_name) = '$($_value)'",
+                    "name-like": "LOWER(device_name) LIKE '%$($_value)%'"
+                },
+                "query": "lib\\sql\\list_compute.sql"
             }
         },
         "list_config": {
