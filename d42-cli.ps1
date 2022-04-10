@@ -131,11 +131,15 @@ function Get-D42() {
                         $response = curl -k -s -X POST -d "output_type=json&query=$query" -u "$($d42_user):$($d42_password)" $d42_url
                     }
                     
+
                     $response = $response | ConvertFrom-Json
-                    if ($response.name) {
+
+                    if($response.psobject.properties -ne $null)
+                    {
                         $response
                     }
-                    else {
+                    else 
+                    {
                         Write-Host "No match found."
                     }
                 }                
